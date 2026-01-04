@@ -8,6 +8,26 @@ class GameState:
         self.game_over = False
         self.winner = None
 
+    def copy(self) -> 'GameState':
+        new_state = GameState()
+        new_state.board = self.board.clone()
+        new_state.current_player = self.current_player
+        new_state.game_over = self.game_over
+        new_state.winner = self.winner
+        return new_state
+
+    def get_board(self) -> torch.Tensor:
+        return self.board
+
+    def get_current_player(self) -> int:
+        return self.current_player
+
+    def is_game_over(self) -> bool:
+        return self.game_over
+
+    def get_winner(self) -> int:
+        return self.winner
+
     def generate_valid_moves(self) -> List[int]:
         valid_moves = [i for i in range(7) if self.board[:, i, 5].sum() == 0]
         if valid_moves == []:
