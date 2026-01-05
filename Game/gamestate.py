@@ -7,6 +7,7 @@ class GameState:
         self.current_player = 0
         self.game_over = False
         self.winner = None
+        self.move_count = 0
 
     def copy(self) -> 'GameState':
         new_state = GameState()
@@ -14,6 +15,7 @@ class GameState:
         new_state.current_player = self.current_player
         new_state.game_over = self.game_over
         new_state.winner = self.winner
+        new_state.move_count = self.move_count
         return new_state
 
     def get_board(self) -> torch.Tensor:
@@ -27,6 +29,9 @@ class GameState:
 
     def get_winner(self) -> int:
         return self.winner
+    
+    def get_move_count(self) -> int:
+        return self.move_count
 
     def generate_valid_moves(self) -> List[int]:
         valid_moves = [i for i in range(7) if self.board[:, i, 5].sum() == 0]
@@ -44,6 +49,7 @@ class GameState:
             self.game_over = True
             self.winner = player
         self.current_player = 1 - self.current_player
+        self.move_count += 1
 
     def unmove(self, move: int):
         if self.game_over:
@@ -56,6 +62,7 @@ class GameState:
                 break
         self.current_player = 1 - self.current_player
         self.board[self.current_player, column, row] = 0
+        self.move_count -= 1
 
     def check_win(self, player: int, column: int, row: int) -> bool:
         # check if the added piece creates a win for the current player
