@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     players = [
         UIPlayer(ui_move_request_queue, ui_move_response_queue),
-        SearchPlayer(max_depth=4),
+        SearchPlayer(max_depth=7),
     ]
 
     controller_thread = threading.Thread(

@@ -4,7 +4,7 @@ from typing import Callable
 class AlphaBetaSearcher:
     def __init__(self, evaluation_function: Callable[[GameState], int], game_state: GameState):
         self.game_state = game_state
-        self.max_depth = 6
+        self.max_depth = 20
         self.pv_table = [[None] * self.max_depth for _ in range(self.max_depth)]
         self.pv_length = [0] * (self.max_depth + 1)
         self.evaluate = evaluation_function

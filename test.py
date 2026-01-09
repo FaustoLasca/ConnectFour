@@ -3,11 +3,13 @@ from Game.gamestate import GameState
 from Search.alphabeta import AlphaBetaSearcher
 import time
 
+DEPTH = 7
+
 game_state = GameState()
 
 searcher = AlphaBetaSearcher(open_lines_evaluation, game_state.copy())
 time_start = time.time()
-print("Alpha-beta result: ", searcher.alpha_beta(5))
+print("Alpha-beta result: ", searcher.alpha_beta(DEPTH))
 time_end = time.time()
 print(searcher.pv_table[0])
 
@@ -19,7 +21,7 @@ print("--------------------------------")
 
 searcher = AlphaBetaSearcher(open_lines_evaluation, game_state.copy())
 time_start = time.time()
-print("Iterative deepening result: ", searcher.iterative_deepening(5))
+print("Iterative deepening result: ", searcher.iterative_deepening(DEPTH))
 time_end = time.time()
 print(searcher.pv_table[0])
 

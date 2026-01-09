@@ -1,9 +1,9 @@
-import torch
+import numpy as np
 from typing import List
 
 class GameState:
     def __init__(self):
-        self.board = torch.zeros(2, 7, 6) # 2 players, 7 columns, 6 rows
+        self.board = np.zeros((2, 7, 6)) # 2 players, 7 columns, 6 rows
         self.current_player = 0
         self.game_over = False
         self.winner = None
@@ -11,14 +11,14 @@ class GameState:
 
     def copy(self) -> 'GameState':
         new_state = GameState()
-        new_state.board = self.board.clone()
+        new_state.board = self.board.copy()
         new_state.current_player = self.current_player
         new_state.game_over = self.game_over
         new_state.winner = self.winner
         new_state.move_count = self.move_count
         return new_state
 
-    def get_board(self) -> torch.Tensor:
+    def get_board(self) -> np.ndarray:
         return self.board
 
     def get_current_player(self) -> int:
@@ -42,7 +42,7 @@ class GameState:
     def move(self, move: int):
         player = self.current_player
         column = move
-        column_data = self.board[:, column].sum(dim=0)
+        column_data = self.board[:, column].sum(axis=0)
         row = column_data.argmin()
         self.board[player, column, row] = 1
         if self.check_win(player, column, row):
@@ -56,7 +56,7 @@ class GameState:
             self.game_over = False
             self.winner = None
         column = move
-        column_data = self.board[:, column].sum(dim=0)
+        column_data = self.board[:, column].sum(axis=0)
         for row in range(5, -1, -1):
             if column_data[row] == 1:
                 break
